@@ -8,7 +8,6 @@
   <header>
     <h1>Todo List ( {{ incompleteCount() }} )</h1>
   
-	<blaze-template name="loginButtons"></blaze-template>
   <blaze-template name="loginButtons"></blaze-template>
     <label class="hide-completed">
       <input type="checkbox" ng-model="$parent.hideCompleted"/>
@@ -24,10 +23,15 @@
   </header>
  
   <ul>
-    <li ng-repeat="task in tasks" ng-class="{'checked': task.checked}">
+    <li ng-repeat="task in tasks" ng-class="{'checked': task.checked, 'private': task.private}">
+
       <button class="delete" ng-click="deleteTask(task)">&times;</button>
  
       <input type="checkbox" ng-checked="task.checked" ng-click="setChecked(task)" class="toggle-checked" />
+
+      <button class="toggle-private" ng-if="task.owner === $root.currentUser._id" ng-click="setPrivate(task)">
+        {{task.private == true ? "Private" : "Public"}}
+      </button>
  
       <span class="text">{{task.text}}</span>
 
